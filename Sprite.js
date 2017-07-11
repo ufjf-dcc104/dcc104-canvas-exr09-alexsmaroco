@@ -10,7 +10,7 @@ function Sprite(){
   this.SIZE = 16;
   this.pose = 0;
   this.frame = 0;
-  this.tempo = 100;
+  this.tempo = 150;
   this.poses = [
     {row: 11, col:1, frames:8, v: 4},
     {row: 10, col:1, frames:8, v: 4},
@@ -94,8 +94,9 @@ Sprite.prototype.mover = function (map, dt) {
   } else {
 	this.podePular = false;
   }
-  this.ay+=this.grav*2*dt;
-  
+  if(this.ay < 200) {
+	this.ay+=this.grav*2*dt;
+  }
 };
 
 

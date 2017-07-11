@@ -21,14 +21,14 @@ function init(){
   map1.setCells([
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1],
-    [1,0,0,1,0,0,0,1,0,1,1,0,1,0,0,0,0,0,0,1],
-    [1,1,1,0,1,0,1,0,2,0,1,0,0,2,0,1,1,0,2,1],
+    [1,0,0,1,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,1],
+    [1,1,1,0,1,0,1,0,2,2,1,0,0,2,0,1,1,0,2,1],
     [1,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,1,0,1,1],
     [1,0,1,1,1,1,0,1,1,0,0,1,1,1,1,0,1,0,0,1],
-    [1,0,1,2,0,0,0,0,0,0,1,0,0,0,0,0,1,1,0,1],
-    [1,0,0,0,0,1,0,0,1,1,1,0,1,1,1,1,1,2,0,1],
+    [1,0,1,2,0,0,0,0,0,0,1,0,0,0,0,0,2,1,0,1],
+    [1,0,0,0,0,1,0,0,1,1,1,0,1,2,1,1,1,2,0,1],
     [1,0,1,1,1,2,0,1,1,0,0,0,0,0,0,0,1,0,1,1],
-    [1,2,1,0,0,0,0,0,0,0,1,1,1,2,1,0,0,0,1,1],
+    [1,2,1,0,0,0,0,0,0,0,1,1,1,2,1,0,0,0,2,1],
     [1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
   ]);
   
@@ -50,6 +50,11 @@ function desenhaInfo() {
 		this.ctx.fillStyle = "red";
 		this.ctx.fillText("Voce perdeu!", 50, canvas.height/2);
 	}
+	if(levels[levelAtual-1].tesouros <= 0) {
+		this.ctx.font = "50px Arial";
+		this.ctx.fillStyle = "green";
+		this.ctx.fillText("Voce venceu! Parabéns", 50, canvas.height/2);
+	}
   this.ctx.font = "15px Arial";
   this.ctx.fillStyle = "orange";
   this.ctx.fillText("Tempo: ", 17, 17);
@@ -66,61 +71,37 @@ function passo(t){
   ctx.scale(2,2);
   
   
-  if(pc.tempo > 0) {
+  if(pc.tempo > 0 && levels[levelAtual-1].tesouros > 0) {
 	pc.mover(levels[levelAtual-1], dt);
   }
   
-  
-  
   levels[levelAtual-1].desenhar(ctx);
   pc.desenhar(ctx);
-  
-  if(pc.gy != -1 && pc.gx != -1 && levels[levelAtual-1].cells[pc.gy][pc.gx] == 4) {
-	levelCompleto(dt);
-  }
+
   ctx.restore();
   desenhaInfo();
   anterior = t;
 }
 
-function levelCompleto(dt) {
-	cont-=dt;
-	if(cont < 0) {
-		this.levelAtual+=1;
-		pc.x = 60;
-		pc.y = 60;
-		cont = 2;
-	} else {
-		this.ctx.font = "20px Arial";
-		this.ctx.fillStyle = "red";
-		this.ctx.fillText("Level completo!", this.pc.x-50, this.pc.y);
-	}
-}
 
 function initControls(){
   addEventListener('keydown', function(e){
     switch (e.keyCode) {
       case 37:
         pc.vx = -100;
-		pc.vy = 0;
         pc.pose = 2;
         e.preventDefault();
         break;
       case 38:
-        //pc.ay = -100;
-		pc.vx = 0;
         pc.pose = 3;
         e.preventDefault();
         break;
       case 39:
         pc.vx = 100;
-		pc.vy = 0;
         pc.pose = 0;
         e.preventDefault();
         break;
       case 40:
-        //pc.ay = 100;
-		pc.vx = 0;
         pc.pose = 1;
         e.preventDefault();
         break;
@@ -140,7 +121,6 @@ function initControls(){
 		break;
       case 39:
         pc.vx = 0;
-        //pc.pose = 4;
         break;
       case 38:
 

@@ -23,7 +23,7 @@ function init(){
     [1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,1,1],
     [1,0,0,1,0,0,0,1,1,1,1,0,1,0,0,0,0,0,0,1],
     [1,1,1,0,1,0,1,0,2,2,1,0,0,2,0,1,1,0,2,1],
-    [1,0,0,0,1,0,0,0,1,1,1,1,0,0,0,0,1,0,1,1],
+    [1,0,0,0,1,0,0,0,1,0,0,1,0,0,0,0,1,0,1,1],
     [1,0,1,1,1,1,0,1,1,0,0,1,1,1,1,0,1,0,0,1],
     [1,0,1,2,0,0,0,0,0,0,1,0,0,0,0,0,2,1,0,1],
     [1,0,0,0,0,1,0,0,1,1,1,0,1,2,1,1,1,2,0,1],
@@ -37,7 +37,7 @@ function init(){
   pc.x = 60;
   pc.y = 60;
   pc.tempo = 100;
-  pc.grav = 50;
+  pc.grav = 100;
   pc.podePular = false;
   pc.images = images;
   initControls();
@@ -93,7 +93,6 @@ function initControls(){
         e.preventDefault();
         break;
       case 38:
-        pc.pose = 3;
         e.preventDefault();
         break;
       case 39:
@@ -102,7 +101,6 @@ function initControls(){
         e.preventDefault();
         break;
       case 40:
-        pc.pose = 1;
         e.preventDefault();
         break;
       default:
@@ -113,7 +111,8 @@ function initControls(){
     switch (e.keyCode) {
 	  case 32:
 		if(pc.podePular) {
-			pc.ay = -250;
+		    pc.pose = 3;
+			pc.ay = -400;
 		}
 	  break;
       case 37:
